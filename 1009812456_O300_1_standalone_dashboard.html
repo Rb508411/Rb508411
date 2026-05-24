@@ -190,12 +190,20 @@
             if (dashboardData.summary && dashboardData.summary.length > 0) {
                 document.getElementById('summary-section').style.display = 'block';
                 const summaryTbody = document.getElementById('summary-tbody');
+                const alertKeywords = ["poor", "slow", "rapid m", "rapid a", "intermediate", "high risk", "reduce", "decrease"];
+
                 dashboardData.summary.forEach(item => {
+
+                    const phenotypeLower = (item.phenotype || "").toLowerCase();
+                    const isAlert = alertKeywords.some(keyword => phenotypeLower.includes(keyword));
+                    const displayGenotype = isAlert ? `<b>${item.genotype}</b>` : item.genotype;
+                    const displayPhenotype = isAlert ? `<b>${item.phenotype}</b>` : item.phenotype;
                     const tr = document.createElement('tr');
+
                     tr.innerHTML = `
                         <td style="font-weight: bold; color: #1f3864;">${item.gene}</td>
-                        <td>${item.genotype}</td>
-                        <td>${item.phenotype}</td>
+                        <td>${displayGenotype}</td>
+                        <td>${displayPhenotype}</td>
                     `;
                     summaryTbody.appendChild(tr);
                 });
