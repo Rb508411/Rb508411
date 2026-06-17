@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แกลเลอรีประกวดภาพวาด & โหวต Popular Vote</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, 'ChulaCharasNew', sans-serif;
+            background-color: #580101;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #100276;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            color: #100276;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .instructions {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+        .instructions ol {
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .vote-btn-main {
+            display: inline-block;
+            background-color: #100276;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
+        }
+        .vote-btn-main:hover {
+            background-color: #c0392b;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e1e8ed;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 220px;
+            background-color: #eaeded;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .item-info {
+            padding: 15px;
+            text-align: center;
+        }
+        .item-code {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .item-title {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        .vote-item-btn {
+            display: block;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        .vote-item-btn:hover {
+            background-color: #2980b9;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            background-color: #fff;
+            margin-top: 5px;
+            border-top: 1px solid #e1e8ed;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎨 แกลเลอรีประกวดภาพวาดและภาพถ่าย</h1>
+        <p>กิจกรรมวันเทคนิคการแพทย์ไทย - รอบ Popular Vote</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="instructions">
+            <h2>🗳️ ขั้นตอนการเข้าชมและลงคะแนนโหวต</h2>
+            <ol>
+                <li>เลื่อนดูผลงานศิลปะทั้ง 40 ชิ้นด้านล่างนี้ตามสบาย</li>
+                <li>เมื่อเจอภาพที่ถูกใจ ให้<strong>จำรหัสภาพ (เช่น IMG_001)</strong> ไว้ในใจ</li>
+                <li>กดปุ่ม <strong>"คลิกเพื่อไปหน้าลงคะแนนโหวต"</strong> ด้านล่างนี้ เพื่อเลือกภาพที่คุณชอบที่สุด 3 อันดับในระบบ Google Form</li>
+            </ol>
+            <!-- ใส่ลิงก์ Google Form ของคุณที่นี่ -->
+            <a href="ใส่ลิงก์_Google_Form_ของคุณที่นี่" target="_blank" class="vote-btn-main">🗳️ คลิกเพื่อไปหน้าลงคะแนนโหวต (Google Form)</a>
+        </div>
+
+        <div class="gallery-grid">
+
+            <!-- ผลงานชิ้นที่ 1 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_001.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_001" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_001</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_001</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 1</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 2 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_002.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_002" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_002</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_002</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 2</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 3 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_003.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_003" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_003</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_003</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 3</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 4 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_004.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_004" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_004</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_004</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 4</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 5 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_005.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_005" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_005</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_005</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 5</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 6 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_006.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_006" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_006</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_006</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 6</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 7 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_007.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_007" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_007</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_007</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 7</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 8 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_008.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_008" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_008</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_008</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 8</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 9 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_009.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_009" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_009</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_009</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 9</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 10 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_010.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_010" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_010</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_010</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 10</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 11 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_011.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_011" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_011</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_011</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 11</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 12 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_012.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_012" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_012</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_012</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 12</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 13 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_013.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_013" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_013</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_013</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 13</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 14 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_014.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_014" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_014</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_014</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 14</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 15 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_015.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_015" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_015</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_015</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 15</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 16 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_016.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_016" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_016</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_016</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 16</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 17 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_017.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_017" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_017</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_017</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 17</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 18 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_018.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_018" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_018</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_018</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 18</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 19 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_019.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_019" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_019</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_019</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 19</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 20 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_020.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_020" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_020</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_020</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 20</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 21 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_021.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_021" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_021</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_021</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 21</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 22 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_022.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_022" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_022</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_022</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 22</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 23 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_023.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_023" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_023</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_023</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 23</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 24 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_024.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_024" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_024</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_024</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 24</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 25 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_025.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_025" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_025</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_025</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 25</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 26 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_026.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_026" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_026</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_026</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 26</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 27 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_027.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_027" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_027</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_027</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 27</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 28 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_028.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_028" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_028</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_028</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 28</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 29 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_029.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_029" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_029</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_029</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 29</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 30 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_030.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_030" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_030</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_030</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 30</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 31 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_031.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_031" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_031</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_031</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 31</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 32 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_032.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_032" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_032</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_032</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 32</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 33 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_033.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_033" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_033</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_033</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 33</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 34 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_034.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_034" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_034</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_034</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 34</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 35 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_035.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_035" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_035</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_035</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 35</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 36 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_036.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_036" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_036</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_036</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 36</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 37 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_037.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_037" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_037</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_037</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 37</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 38 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_038.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_038" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_038</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_038</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 38</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 39 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_039.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_039" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_039</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_039</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 39</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+            <!-- ผลงานชิ้นที่ 40 -->
+            <div class="gallery-item">
+                <div class="image-placeholder">
+                    <!-- วิธีใช้: แทนที่ 'ใส่ลิงก์รูปภาพผลงานที่นี่' ด้วย URL รูปภาพจริง เช่น https://yourwebsite.com/images/IMG_040.jpg -->
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_040" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_040</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-code">IMG_040</div>
+                    <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 40</div>
+                    <!-- ปุ่มนี้จะพาวิ่งกลับไปโหวตที่ Google Form ด้านบน -->
+                    <a href="#top" class="vote-item-btn">❤️ จำรหัสนี้แล้วไปโหวต</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 กิจกรรมวันเทคนิคการแพทย์ไทย. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
