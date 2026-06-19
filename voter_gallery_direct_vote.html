@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบโหวต Popular Vote - วันเทคนิคการแพทย์ไทย</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            color: #e8f8f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .instructions {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 5px solid #1abc9c;
+            text-align: center;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.4rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e1e8ed;
+            display: flex;
+            flex-direction: column;
+        }
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        .image-container {
+            width: 100%;
+            height: 230px;
+            background-color: #eaeded;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #95a5a6;
+            position: relative;
+            overflow: hidden;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+        .item-info {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .item-code {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .item-title {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .vote-btn {
+            display: block;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
+        }
+        .vote-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.02);
+        }
+        .vote-btn:active {
+            transform: scale(0.98);
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #95a5a6;
+            background-color: #fff;
+            margin-top: 5px;
+            border-top: 1px solid #e1e8ed;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🗳️ โหวตออนไลน์ ผลงานประกวดภาพวาดและภาพถ่าย</h1>
+        <p>กิจกรรมวันเทคนิคการแพทย์ไทย - รอบ Popular Vote</p>
+    </header>
+
+    <div class="container">
+        <div class="instructions">
+            <h2>✨ กติกาการโหวต ✨</h2>
+            <p>ชื่นชอบผลงานชิ้นไหน สามารถกดปุ่ม <strong>"❤️ คลิกเพื่อโหวตภาพนี้"</strong> ใต้ภาพได้ทันที ระบบจะนำท่านไปยังหน้ายืนยันคะแนนครับ</p>
+        </div>
+
+        <div class="gallery-grid">
+
+            <!-- ชิ้นที่ 1 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_001" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_001</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_001</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 1</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_001" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 2 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_002" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_002</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_002</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 2</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_002" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 3 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_003" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_003</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_003</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 3</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_003" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 4 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_004" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_004</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_004</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 4</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_004" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 5 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_005" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_005</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_005</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 5</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_005" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 6 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_006" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_006</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_006</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 6</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_006" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 7 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_007" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_007</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_007</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 7</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_007" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 8 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_008" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_008</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_008</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 8</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_008" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 9 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_009" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_009</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_009</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 9</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_009" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 10 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_010" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_010</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_010</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 10</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_010" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 11 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_011" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_011</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_011</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 11</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_011" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 12 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_012" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_012</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_012</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 12</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_012" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 13 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_013" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_013</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_013</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 13</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_013" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 14 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_014" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_014</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_014</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 14</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_014" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 15 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_015" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_015</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_015</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 15</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_015" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 16 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_016" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_016</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_016</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 16</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_016" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 17 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_017" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_017</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_017</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 17</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_017" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 18 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_018" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_018</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_018</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 18</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_018" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 19 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_019" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_019</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_019</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 19</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_019" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 20 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_020" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_020</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_020</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 20</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_020" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 21 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_021" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_021</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_021</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 21</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_021" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 22 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_022" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_022</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_022</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 22</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_022" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 23 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_023" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_023</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_023</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 23</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_023" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 24 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_024" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_024</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_024</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 24</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_024" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 25 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_025" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_025</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_025</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 25</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_025" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 26 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_026" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_026</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_026</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 26</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_026" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 27 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_027" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_027</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_027</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 27</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_027" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 28 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_028" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_028</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_028</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 28</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_028" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 29 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_029" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_029</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_029</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 29</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_029" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 30 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_030" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_030</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_030</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 30</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_030" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 31 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_031" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_031</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_031</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 31</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_031" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 32 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_032" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_032</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_032</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 32</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_032" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 33 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_033" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_033</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_033</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 33</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_033" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 34 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_034" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_034</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_034</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 34</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_034" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 35 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_035" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_035</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_035</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 35</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_035" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 36 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_036" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_036</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_036</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 36</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_036" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 37 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_037" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_037</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_037</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 37</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_037" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 38 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_038" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_038</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_038</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 38</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_038" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 39 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_039" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_039</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_039</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 39</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_039" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+            <!-- ชิ้นที่ 40 -->
+            <div class="gallery-item">
+                <div class="image-container">
+                    <img src="ใส่ลิงก์รูปภาพผลงานที่นี่" alt="IMG_040" onerror="this.style.display='none';">
+                    <span>🖼️ ภาพผลงาน IMG_040</span>
+                </div>
+                <div class="item-info">
+                    <div>
+                        <div class="item-code">IMG_040</div>
+                        <div class="item-title">ภาพวาด/ภาพถ่ายประกวดชิ้นที่ 40</div>
+                    </div>
+                    <!-- เมื่อกดปุ่มนี้ จะเปิด Form ที่กรือรหัสภาพนี้ไว้ให้แล้วทันที -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXXXXXXXXXXXXX/viewform?entry.12345678=IMG_040" target="_blank" class="vote-btn">❤️ คลิกเพื่อโหวตภาพนี้</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 กิจกรรมวันเทคนิคการแพทย์ไทย. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
