@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบโหวตภาพถ่ายหรือภาพวาดพร้อมคำบรรยายแสดงถึงวิชาชีพเทคนิคการแพทย์ Top 3 !!!</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #C7203B;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 160px; /* เพิ่มพื้นที่ด้านล่างเพื่อไม่ให้แถบโหวตบังผลงาน */
+        }
+        header {
+            background: linear-gradient(135deg, #C7203B, #9b59b6);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: bold; }
+        header p { margin: 10px 0 0 0; font-size: 1.1rem; color: #f4ecf7; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, border-color 0.3s;
+            border: 3px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+        .gallery-item.selected {
+            border-color: #9b59b6;
+            box-shadow: 0 8px 20px rgba(155, 89, 182, 0.3);
+            transform: translateY(-5px);
+        }
+        .image-container {
+            width: 100%;
+            height: 220px;
+            background-color: #eaeded;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #95a5a6;
+            position: relative;
+        }
+        .image-container img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
+        .item-info {
+            padding: 15px;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .item-code { font-size: 1.3rem; font-weight: bold; color: #2c3e50; }
+        
+        .select-btn {
+            display: block;
+            width: 100%;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        .select-btn:hover:not(:disabled) { background-color: #bdc3c7; }
+        .gallery-item.selected .select-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* Sticky Footer Box (แถบโหวตด้านล่าง) */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
+            padding: 15px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            border-top: 4px solid #9b59b6;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .slots-container {
+            display: flex;
+            gap: 15px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        
+        /* กล่องลำดับแต่ละช่อง */
+        .slot {
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #7f8c8d;
+            width: 110px;
+            height: 125px;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+        .slot.filled {
+            border-style: solid;
+            border-color: #9b59b6;
+            background: #f4ecf7;
+            color: #8e44ad;
+        }
+        
+        /* ตัวอย่างภาพที่ยกมาแสดงด้านล่าง */
+        .thumb-container {
+            width: 100%;
+            height: 70px;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 5px;
+            background: #e5e7eb;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .thumb-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .thumb-code {
+            font-size: 0.7rem;
+            background: rgba(142, 68, 173, 0.9);
+            color: white;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2px 0;
+            font-weight: bold;
+        }
+        .empty-text {
+            margin-auto: auto;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            padding-top: 20px;
+        }
+        
+        .submit-btn {
+            background-color: #03e40f;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+            min-width: 250px;
+        }
+        .submit-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .submit-btn:hover:not(:disabled) {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        #countdown-message {
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .slots-container { gap: 8px; width: 100%; }
+            .slot { width: 31%; height: 115px; font-size: 0.75rem; }
+            .thumb-container { height: 55px; }
+            .submit-btn { width: 100%; padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🏆 โหวตภาพถ่ายหรือภาพวาด Top 3!!!</h1>
+        <p>กรุณาเลือกภาพถ่ายหรือภาพวาดที่ท่านเห็นว่าแสดงถึงวิชาชีพเทคนิคการแพทย์ 3 อันดับ<br>
+        <small>(โหวตได้ 1 ครั้งต่อ 6 ชั่วโมงต่อ 1 เครื่อง)</small></p>
+    </header>
+
+    <div class="container">
+        <div id="countdown-message">⏳ ท่านจะสามารถโหวตได้อีกครั้งใน: <span id="timer-text">00:00:00</span></div>
+        <div class="gallery-grid" id="gallery">
+            <!-- สร้างโดย JavaScript -->
+        </div>
+    </div>
+
+    <!-- แถบเลือกโหวตด้านล่างสุด -->
+    <div class="sticky-footer">
+        <div class="footer-content">
+            <div class="slots-container">
+                <div class="slot" id="slot-1">
+                    <span>อันดับ 1 (3 บ.)</span>
+                    <div class="val" style="width:100%;"><div class="empty-text">- ว่าง -</div></div>
+                </div>
+                <div class="slot" id="slot-2">
+                    <span>อันดับ 2 (2 บ.)</span>
+                    <div class="val" style="width:100%;"><div class="empty-text">- ว่าง -</div></div>
+                </div>
+                <div class="slot" id="slot-3">
+                    <span>อันดับ 3 (1 บ.)</span>
+                    <div class="val" style="width:100%;"><div class="empty-text">- ว่าง -</div></div>
+                </div>
+            </div>
+            <button class="submit-btn" id="submit-btn" disabled onclick="submitVotes()">ยืนยันการโหวตทั้ง 3 อันดับ</button>
+        </div>
+    </div>
+
+    <script>
+        const categoryName = "Photo";
+        // *** ให้นำ URL ของ Google Apps Script มาใส่ตรงนี้ ***
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwjgxGMAvXpjC3cusPe1ag54jE6Wlj5evUm2Cx64AdKJb_9XDXTHEQOW6fzw0U-wiu/exec";
+        
+        // ระยะเวลานับถอยหลัง (6 ชั่วโมง = 6 * 60 * 60 * 1000 มิลลิวินาที)
+        const COOLDOWN_DURATION = 6 * 60 * 60 * 1000; 
+        
+        let selectedItems = [];
+        let countdownInterval;
+
+        // ฟังก์ชันสร้างหรือดึง Device ID ประจำเครื่อง
+
+
+        function getOrCreateDeviceId() {
+            let deviceId = localStorage.getItem('voter_device_id');
+            if (!deviceId) {
+                deviceId = 'DEV-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now().toString(36);
+                localStorage.setItem('voter_device_id', deviceId);
+            }
+            return deviceId + "_P"; // <--- เติม + "_D" ตรงนี้สำหรับ Drawing
+        }
+
+
+
+
+        // จำลองสร้างผลงานภาพ 40 ภาพ
+        const gallery = document.getElementById('gallery');
+        for (let i = 1; i <= 40; i++) {
+            let imgCode = `IMG_${i.toString().padStart(3, '0')}`;
+            let mockImgUrl = "ใส่ลิงก์รูปภาพผลงานที่นี่"; 
+            
+            gallery.innerHTML += `
+                <div class="gallery-item" id="card-${imgCode}">
+                    <div class="image-container">
+                        <img src="${mockImgUrl}" alt="${imgCode}" onerror="this.style.display='none';">
+                        <span>🖼️ ภาพผลงาน ${imgCode}</span>
+                    </div>
+                    <div class="item-info">
+                        <div class="item-code">${imgCode}</div>
+                        <button class="select-btn" onclick="toggleSelection('${imgCode}')">➕ เลือกภาพนี้</button>
+                    </div>
+                </div>
+            `;
+        }
+
+
+
+
+
+        function toggleSelection(imgCode) {
+            // ป้องกันกดโหวตตอนติด Cooldown
+            if (localStorage.getItem('lastVoteTime_P') && (Date.now() - parseInt(localStorage.getItem('lastVoteTime_P')) < COOLDOWN_DURATION)) {
+                return;
+            }
+
+            const card = document.getElementById(`card-${imgCode}`);
+            const btn = card.querySelector('.select-btn');
+            const index = selectedItems.indexOf(imgCode);
+
+            if (index > -1) {
+                selectedItems.splice(index, 1);
+                card.classList.remove('selected');
+                btn.innerText = "➕ เลือกภาพนี้";
+            } else {
+                if (selectedItems.length >= 3) {
+                    alert('ท่านเลือกครบ 3 อันดับแล้ว หากต้องการเปลี่ยนชิ้นงาน กรุณากดยกเลิกภาพเดิมก่อนครับ');
+                    return;
+                }
+                selectedItems.push(imgCode);
+                card.classList.add('selected');
+                btn.innerText = "❌ ยกเลิกการเลือก";
+            }
+            updateSlots();
+        }
+
+        function updateSlots() {
+            for (let i = 1; i <= 3; i++) {
+                const slot = document.getElementById(`slot-${i}`);
+                const valDiv = slot.querySelector('.val');
+                const imgCode = selectedItems[i - 1];
+
+                if (imgCode) {
+                    slot.classList.add('filled');
+                    const galleryImg = document.getElementById(`card-${imgCode}`).querySelector('img');
+                    const imgSrc = galleryImg.src;
+                    
+                    valDiv.innerHTML = `
+                        <div class="thumb-container">
+                            <img src="${imgSrc}" style="${galleryImg.style.display === 'none' ? 'display:none;' : ''}">
+                            <div class="thumb-code">${imgCode}</div>
+                        </div>
+                    `;
+                } else {
+                    slot.classList.remove('filled');
+                    valDiv.innerHTML = "<div class='empty-text'>- ว่าง -</div>";
+                }
+            }
+            
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // เช็คว่าติดคูลดาวน์หรือไม่ ถ้าไม่ติดให้เช็คความครบถ้วน
+            if (!localStorage.getItem('lastVoteTime_P') || (Date.now() - parseInt(localStorage.getItem('lastVoteTime_P')) >= COOLDOWN_DURATION)) {
+                if (selectedItems.length === 3) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "ยืนยันการโหวตทั้ง 3 อันดับ";
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = "ยืนยันการโหวตทั้ง 3 อันดับ";
+                }
+            }
+        }
+
+        function submitVotes() {
+            if (selectedItems.length < 3) {
+                alert("กรุณาเลือกให้ครบ 3 อันดับก่อนยืนยันครับ");
+                return;
+            }
+            
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "⏳ กำลังบันทึกคะแนน...";
+            btn.disabled = true;
+
+            const deviceId = getOrCreateDeviceId();
+            const url = `${SCRIPT_URL}?category=${categoryName}&rank1=${selectedItems[0]}&rank2=${selectedItems[1]}&rank3=${selectedItems[2]}&deviceId=${deviceId}`;
+
+            fetch(url, { method: 'GET', mode: 'no-cors' })
+            .then(() => {
+                alert("✅ ระบบบันทึกคะแนนโหวตของคุณเรียบร้อยแล้ว ขอบคุณครับ!");
+                
+                // บันทึกเวลาที่ทำการโหวต
+                localStorage.setItem('lastVoteTime_P', Date.now().toString());
+                
+                // เคลียร์การเลือกปัจจุบัน
+                selectedItems = [];
+                document.querySelectorAll('.gallery-item.selected').forEach(el => el.classList.remove('selected'));
+                updateSlots();
+                
+                // เริ่มนับถอยหลัง
+                checkCooldown();
+                
+            }).catch(error => {
+                alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+                btn.innerText = "ยืนยันการโหวตทั้ง 3 อันดับ";
+                btn.disabled = false;
+            });
+        }
+        
+        function lockUI() {
+            document.querySelectorAll('.select-btn').forEach(b => {
+                b.disabled = true;
+                b.innerText = "🔒 รอโหวตใหม่";
+            });
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('countdown-message').style.display = 'block';
+        }
+        
+        function unlockUI() {
+            document.querySelectorAll('.select-btn').forEach(b => {
+                b.disabled = false;
+                b.innerText = "➕ เลือกภาพนี้";
+            });
+            document.getElementById('countdown-message').style.display = 'none';
+            document.getElementById('submit-btn').innerText = "ยืนยันการโหวตทั้ง 3 อันดับ";
+            updateSlots();
+        }
+
+        function checkCooldown() {
+            const lastVote = localStorage.getItem('lastVoteTime_P');
+            if (!lastVote) return false;
+
+            const now = Date.now();
+            const elapsed = now - parseInt(lastVote);
+
+            if (elapsed < COOLDOWN_DURATION) {
+                const remaining = COOLDOWN_DURATION - elapsed;
+                lockUI();
+                startCountdown(remaining);
+                return true;
+            } else {
+                localStorage.removeItem('lastVoteTime_P');
+                unlockUI();
+                return false;
+            }
+        }
+
+        function startCountdown(duration) {
+            clearInterval(countdownInterval);
+            let timer = duration;
+            const btn = document.getElementById('submit-btn');
+            const timerText = document.getElementById('timer-text');
+
+            function updateDisplay() {
+                let hours = Math.floor((timer % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timer % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timer % (1000 * 60)) / 1000);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                const timeString = `${hours}:${minutes}:${seconds}`;
+                btn.innerText = `⏳ โหวตได้อีกครั้งใน ${timeString}`;
+                timerText.innerText = timeString;
+            }
+
+            updateDisplay();
+
+            countdownInterval = setInterval(function () {
+                timer -= 1000;
+                
+                if (timer <= 0) {
+                    clearInterval(countdownInterval);
+                    localStorage.removeItem('lastVoteTime_P');
+                    unlockUI();
+                } else {
+                    updateDisplay();
+                }
+            }, 1000);
+        }
+        
+        window.onload = function() {
+            // ตรวจสอบสถานะการโหวตเมื่อโหลดหน้าเว็บ
+            checkCooldown();
+        };
+    </script>
+</body>
+</html>
