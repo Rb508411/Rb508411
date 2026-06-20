@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BML - Laboratory Quality Management System (LQMS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Sarabun', sans-serif; }
+        @keyframes pulse-alert {
+            0%, 100% { background-color: rgba(239, 68, 68, 1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+            50% { background-color: rgba(185, 28, 28, 0.9); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+        }
+        .animate-pulse-alert { animation: pulse-alert 2s infinite; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-blue-600 rounded-lg"><i class="fa-solid fa-flask-vial text-xl text-white"></i></div>
+                <div>
+                    <h1 class="text-base font-bold tracking-wide leading-none">BML - LQMS Portal</h1>
+                    <p class="text-[11px] text-blue-200 mt-1">ระบบเฝ้าระวังสภาพแวดล้อมวิกฤต | รหัสเอกสาร: FP-BML-BIO-00-013</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-1" id="nav-container">
+                <button onclick="switchPage('dashboard')" id="nav-dashboard" class="px-3 py-2 rounded-lg text-xs font-semibold bg-blue-700 text-white transition">ผังสถานะแล็บ (27)</button>
+                <button onclick="switchPage('record')" id="nav-record" class="px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition">บันทึกประจำวัน</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <section id="page-dashboard" class="space-y-6">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">สภาพอากาศ (ห้วยขวาง)</p>
+                        <h3 class="text-xl font-bold text-slate-700 mt-1">36.0 °C</h3>
+                        <p class="text-[11px] text-emerald-600 mt-0.5"><i class="fa-solid fa-cloud-sun mr-1"></i> ซิงค์ตรง TMD API</p>
+                    </div>
+                    <div class="p-3 bg-amber-50 text-amber-600 rounded-xl text-lg"><i class="fa-solid fa-temperature-high"></i></div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">ความชื้นภายนอก</p>
+                        <h3 class="text-xl font-bold text-slate-700 mt-1">59.5 %</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">อัปเดตเมื่อ 06:52 น.</p>
+                    </div>
+                    <div class="p-3 bg-sky-50 text-sky-600 rounded-xl text-lg"><i class="fa-solid fa-droplet"></i></div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200/80 flex items-center justify-between border-l-4 border-l-red-500">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">จุดวิกฤตต้องแก้ไข (CAPA)</p>
+                        <h3 class="text-xl font-bold text-red-600 mt-1" id="kpi-critical-count">2 จุด</h3>
+                        <p class="text-[11px] text-red-500 font-medium mt-0.5"><i class="fa-solid fa-circle-exclamation mr-1"></i> PCR Room I & ตู้ -20C</p>
+                    </div>
+                    <div class="p-2.5 bg-red-600 text-white rounded-xl text-sm animate-pulse-alert shadow-md"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">เวรผู้บันทึกล่าสุด</p>
+                        <h3 class="text-base font-bold text-slate-700 mt-1">คุณ KS (รอบเช้า M)</h3>
+                        <p class="text-[11px] text-slate-500 mt-0.5">20/06/2026</p>
+                    </div>
+                    <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl text-lg"><i class="fa-solid fa-user-doctor"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
+                
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center border-b pb-4 mb-6 gap-4">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-800"><i class="fa-solid fa-map-location-dot text-blue-600 mr-2"></i>ผังพิกัดสถานะสิ่งแวดล้อมห้องปฏิบัติการ BML (27 Nodes)</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">แสดงค่า อุณหภูมิ / ความชื้น Real-time อ้างอิงจากฐานข้อมูลกลาง (RT.csv และ Freezers)</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl border">
+                        <button onclick="filterMasterMap('all')" id="flt-all" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm transition">แสดงทั้งหมด (27)</button>
+                        <button onclick="filterMasterMap('room')" id="flt-room" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-white/60 transition">🏢 ห้องปฏิบัติการ (11)</button>
+                        <button onclick="filterMasterMap('freezer')" id="flt-freezer" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-white/60 transition">❄️ ตู้แช่แข็ง/ตู้เย็น (16)</button>
+                        <button onclick="filterMasterMap('critical')" id="flt-critical" class="px-3 py-1.5 rounded-lg text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 transition border border-red-200">🔥 เฉพาะจุดวิกฤต (2)</button>
+                    </div>
+                </div>
+
+                <div id="section-rooms">
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 font-bold rounded text-xs">PART I</span>
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">พิกัดอุณหภูมิและความชื้นสัมพัทธ์: โซนห้องปฏิบัติการ (11 Rooms)</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                        
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">1. Cobas 4800 Zone</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">22.1 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">60 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">2. Cobas 6800 Room</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">21.0 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">58 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">3. Post PCR Room</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">21.6 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">45 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-critical bg-red-50/40 p-3 rounded-xl border-2 border-red-500 shadow-sm relative">
+                            <span class="absolute top-2 right-2 px-1.5 py-0.5 bg-red-600 text-white rounded text-[9px] font-bold animate-pulse-alert">วิกฤต</span>
+                            <p class="text-xs font-bold text-red-900 pr-8">4. PCR Room I (หน้า Post)</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-red-100/80 p-1 rounded"><span class="text-[10px] text-red-500 font-bold block">อุณหภูมิ (18-25)</span><span class="text-xs font-bold text-red-700">26.3 °C ⚠️</span></div>
+                                <div class="bg-white p-1 rounded border"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">53 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">5. PCR Room I (หน้า MMX)</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">22.0 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">48 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">6. PCR Room II</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">21.0 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">60 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">7. PCR Mix Room</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">20.0 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">48 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">8. MMX Room</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">20.5 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">46 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">9. Sample Preparation</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">22.0 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">57 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">10. BSL-2 Containment</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">21.9 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">45 %</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-card data-room data-normal bg-white p-3 rounded-xl border border-slate-200 shadow-sm relative">
+                            <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></span>
+                            <p class="text-xs font-bold text-slate-700 pr-4">11. Stock Room</p>
+                            <div class="grid grid-cols-2 gap-1.5 mt-2 text-center">
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">อุณหภูมิ</span><span class="text-xs font-bold text-emerald-600">21.1 °C</span></div>
+                                <div class="bg-slate-50 p-1 rounded"><span class="text-[10px] text-slate-400 block">ความชื้น</span><span class="text-xs font-bold text-emerald-600">39 %</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="my-8 border-slate-200 border-dashed">
+
+                <div id="section-freezers">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="px-2 py-0.5 bg-cyan-100 text-cyan-800 font-bold rounded text-xs">PART II</span>
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">พิกัดอุณหภูมิตู้เย็นและตู้แช่แข็งวิกฤต (16 Critical Freezers Matrix)</h3>
+                    </div>
+
+                    <div class="mb-5 bg-slate-50 p-3.5 rounded-xl border">
+                        <p class="text-xs font-bold text-slate-500 mb-2.5"><i class="fa-solid fa-temperature-low text-blue-500 mr-1.5"></i>กลุ่มตู้เย็นเก็บสิ่งส่งตรวจ 4 °C (เกณฑ์ 2.0 ถึง 8.0 °C)</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00011</p><p class="text-sm font-bold text-emerald-600 mt-0.5">4.8 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00442 (4C)</p><p class="text-sm font-bold text-emerald-600 mt-0.5">5.7 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00013</p><p class="text-sm font-bold text-emerald-600 mt-0.5">5.1 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00009 (4C)</p><p class="text-sm font-bold text-emerald-600 mt-0.5">3.1 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">BML-MOL-139</p><p class="text-sm font-bold text-emerald-600 mt-0.5">4.4 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">BML-MOL-211</p><p class="text-sm font-bold text-emerald-600 mt-0.5">5.4 °C</p></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5 bg-slate-50 p-3.5 rounded-xl border">
+                        <p class="text-xs font-bold text-slate-500 mb-2.5"><i class="fa-solid fa-snowflake text-indigo-500 mr-1.5"></i>กลุ่มตู้แช่แข็งน้ำยาเคมี -20 °C (เกณฑ์ -23.0 ถึง -17.0 °C)</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00007</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-18.0 °C</p></div>
+                            
+                            <div class="map-card data-freezer data-critical bg-red-50 p-2.5 rounded-lg border-2 border-red-500 text-center relative">
+                                <span class="absolute -top-1.5 -right-1.5 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span></span>
+                                <p class="text-[10px] font-bold text-red-800">NML00006</p><p class="text-sm font-bold text-red-600 mt-0.5">-23.5 °C ⚠️</p>
+                            </div>
+
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00009 (-20C)</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-18.6 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00443</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-17.5 °C</p></div>
+                            <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00442 (-20C)</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-19.2 °C</p></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                        
+                        <div class="md:col-span-5 bg-slate-50 p-3.5 rounded-xl border">
+                            <p class="text-xs font-bold text-slate-500 mb-2.5"><i class="fa-solid fa-icicles text-cyan-500 mr-1.5"></i>ตู้เก็บสิ่งส่งตรวจ -30 °C</p>
+                            <div class="grid grid-cols-2 gap-2.5">
+                                <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00005</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-30.2 °C</p></div>
+                                <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">NML00004</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-29.0 °C</p></div>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-7 bg-slate-50 p-3.5 rounded-xl border">
+                            <p class="text-xs font-bold text-purple-700 mb-2.5"><i class="fa-solid fa-biohazard mr-1.5 text-purple-600"></i>ตู้แช่แข็งอุณหภูมิต่ำพิเศษ -70 °C (เกณฑ์ -75 ถึง -65 °C)</p>
+                            <div class="grid grid-cols-3 gap-2.5">
+                                <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">BML-MOL-220</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-69.0 °C</p></div>
+                                <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">BML-MOL-125</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-69.0 °C</p></div>
+                                <div class="map-card data-freezer data-normal bg-white p-2.5 rounded-lg border text-center"><p class="text-[10px] text-slate-400">BML-MOL-124</p><p class="text-sm font-bold text-emerald-600 mt-0.5">-67.0 °C</p></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // JS Filter Logic Control
+        function filterMasterMap(mode) {
+            const allCards = document.querySelectorAll('.map-card');
+            const btns = {
+                all: document.getElementById('flt-all'),
+                room: document.getElementById('flt-room'),
+                freezer: document.getElementById('flt-freezer'),
+                critical: document.getElementById('flt-critical')
+            };
+
+            // Reset Button Styles
+            Object.values(btns).forEach(b => b.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-white/60 transition");
+            btns.critical.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 transition border border-red-200";
+
+            // Set Active button style
+            if(mode !== 'critical') {
+                btns[mode].className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm transition";
+            } else {
+                btns.critical.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-red-600 shadow-md transition";
+            }
+
+            // Filtering Loop
+            allCards.forEach(card => {
+                const isRoom = card.classList.contains('data-room');
+                const isFreezer = card.classList.contains('data-freezer');
+                const isCritical = card.classList.contains('data-critical');
+
+                if (mode === 'all') {
+                    card.style.display = 'block';
+                } else if (mode === 'room' && isRoom) {
+                    card.style.display = 'block';
+                } else if (mode === 'freezer' && isFreezer) {
+                    card.style.display = 'block';
+                } else if (mode === 'critical' && isCritical) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
